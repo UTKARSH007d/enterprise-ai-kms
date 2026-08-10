@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +22,7 @@ export default function LoginPage() {
       formData.append("password", password);
 
       const response = await fetch(
-        "http://127.0.0.1:8000/auth/login",
+        `${API_URL}/auth/login`,
         {
           method: "POST",
           headers: {
@@ -54,7 +56,7 @@ export default function LoginPage() {
       // ==========================================================
 
       const userResponse = await fetch(
-        "http://127.0.0.1:8000/auth/me",
+        `${API_URL}/auth/me`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -111,7 +113,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 flex items-center justify-center px-6">
+    <main className="min-h-screen flex items-center justify-center bg-slate-950 px-4">
 
       <div className="w-full max-w-md">
 

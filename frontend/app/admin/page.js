@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function AdminPage() {
   const router = useRouter();
 
@@ -73,14 +75,14 @@ export default function AdminPage() {
 
   async function fetchStats(token) {
     try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/admin/stats",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+const response = await fetch(
+  `${API_URL}/admin/stats`,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
 
       if (
         response.status === 401 ||

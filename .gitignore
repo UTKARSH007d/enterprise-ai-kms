@@ -1,0 +1,70 @@
+# ==============================
+# Environment & Secrets
+# ==============================
+.env
+.env.*
+!.env.example
+
+# ==============================
+# Python
+# ==============================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# ==============================
+# ChromaDB / Local Vector Store
+# ==============================
+backend/chroma_db/
+
+# ==============================
+# Uploaded Files
+# ==============================
+backend/uploads/
+
+# ==============================
+# Python generated files
+# ==============================
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ==============================
+# IDE / Editor
+# ==============================
+.vscode/
+.idea/
+
+# ==============================
+# OS files
+# ==============================
+.DS_Store
+Thumbs.db
+
+# ==============================
+# Node / Next.js
+# ==============================
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# ==============================
+# Logs
+# ==============================
+*.log
+
+# ==============================
+# Build / temporary files
+# ==============================
+dist/
+build/
+*.tmp
+*.temp

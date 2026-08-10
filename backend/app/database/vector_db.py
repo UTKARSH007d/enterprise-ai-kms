@@ -5,31 +5,23 @@ client = chromadb.PersistentClient(
 )
 
 collection = client.get_or_create_collection(
-    name="documents"
+    name="documents",
+    embedding_function=None
 )
 
+
 def store_embedding(
-
     chunk_id: str,
-
     chunk_text: str,
-
     embedding,
-
     metadata: dict
-
 ):
 
     collection.add(
-
         ids=[chunk_id],
-
         documents=[chunk_text],
-
-        embeddings=[embedding.tolist()],
-
+        embeddings=[embedding],
         metadatas=[metadata]
-
     )
 
 
@@ -40,7 +32,7 @@ def search_similar_chunks(
 ):
 
     query_params = {
-        "query_embeddings": [query_embedding.tolist()],
+        "query_embeddings": [query_embedding],
         "n_results": top_k
     }
 
@@ -57,6 +49,7 @@ def search_similar_chunks(
     results = collection.query(**query_params)
 
     return results
+
 
 def delete_document_embeddings(document_id):
 

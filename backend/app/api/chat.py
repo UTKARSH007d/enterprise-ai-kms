@@ -129,7 +129,8 @@ def chat(
     # ======================================================
 
     question_embedding = generate_embedding(
-        request.question
+        request.question,
+        task_type="RETRIEVAL_QUERY"
     )
 
 

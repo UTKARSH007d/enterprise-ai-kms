@@ -1,14 +1,38 @@
 import chromadb
 
+
 client = chromadb.PersistentClient(
     path="chroma_db"
 )
+
 
 collection = client.get_or_create_collection(
     name="documents",
     embedding_function=None
 )
 
+
+# ==========================================================
+# STORE EMBEDDING
+# ==========================================================
+
+def store_embedding(
+    chunk_id: str,
+    chunk_text: str,
+    embedding,
+    metadata: dict
+):
+    collection.add(
+        ids=[chunk_id],
+        documents=[chunk_text],
+        embeddings=[embedding],
+        metadatas=[metadata]
+    )
+
+
+# ==========================================================
+# SEARCH SIMILAR CHUNKS
+# ==========================================================
 
 def search_similar_chunks(
     query_embedding,
@@ -28,6 +52,7 @@ def search_similar_chunks(
     }
 
     if department_id is not None:
+
         query_params["where"] = {
             "department_id": {
                 "$in": [
@@ -37,25 +62,55 @@ def search_similar_chunks(
             }
         }
 
-        print("Chroma filter:", query_params["where"])
+        print(
+            "Chroma filter:",
+            query_params["where"]
+        )
+
     else:
-        print("No department filter - searching all documents")
 
-    results = collection.query(**query_params)
+        print(
+            "No department filter - searching all documents"
+        )
 
-    print("Retrieved IDs:", results.get("ids"))
-    print("Retrieved metadata:", results.get("metadatas"))
+    results = collection.query(
+        **query_params
+    )
+
+    print(
+        "Retrieved IDs:",
+        results.get("ids")
+    )
+
+    print(
+        "Retrieved metadata:",
+        results.get("metadatas")
+    )
+
     print("========================================")
 
     return results
 
 
+# ==========================================================
+# DELETE DOCUMENT EMBEDDINGS
+# ==========================================================
 
-
-def delete_document_embeddings(document_id):
+def delete_document_embeddings(
+    document_id
+):
 
     collection.delete(
         where={
             "document_id": str(document_id)
         }
     )
+
+
+# ==========================================================
+# CHROMA COUNT
+# ==========================================================
+
+def get_chroma_count():
+
+    return collection.count()

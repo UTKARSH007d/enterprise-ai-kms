@@ -17,7 +17,7 @@ def get_audit_logs(
     current_user=Depends(get_current_user)
 ):
     # Admin and Super Admin can view audit logs
-    if current_user.role.lower() not in ("admin", "superadmin"):
+    if current_user.role.lower() not in ("admin", "super_admin"):
         raise HTTPException(
             status_code=403,
             detail="Admin access required"

@@ -25,30 +25,7 @@ def store_embedding(
     )
 
 
-def search_similar_chunks(
-    query_embedding,
-    top_k=5,
-    department_id=None
-):
 
-    query_params = {
-        "query_embeddings": [query_embedding],
-        "n_results": top_k
-    }
-
-    if department_id is not None:
-        query_params["where"] = {
-            "department_id": {
-                "$in": [
-                    str(department_id),
-                    "company-wide"
-                ]
-            }
-        }
-
-    results = collection.query(**query_params)
-
-    return results
 
 
 def delete_document_embeddings(document_id):

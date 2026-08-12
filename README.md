@@ -1,6 +1,6 @@
 # Enterprise AI Knowledge Management System
 
-An AI-powered enterprise knowledge management platform that allows organizations to securely manage internal documents and provides employees with an AI assistant capable of answering questions using information retrieved from approved company documents.
+An AI-powered enterprise knowledge management platform that enables organizations to securely manage internal documents and provides employees with an AI assistant capable of answering questions using information retrieved from approved company documents.
 
 The system uses Retrieval-Augmented Generation (RAG) to retrieve relevant information from the organization's knowledge base before generating AI responses.
 
@@ -8,31 +8,26 @@ The system uses Retrieval-Augmented Generation (RAG) to retrieve relevant inform
 
 ## Project Overview
 
-The Enterprise AI Knowledge Management System is designed to provide a centralized platform for storing, searching, and accessing organizational knowledge.
+The Enterprise AI Knowledge Management System provides a centralized platform for managing and accessing organizational knowledge.
 
-Employees can:
+The platform supports three user roles:
 
-- Search the organization's knowledge base
-- Access approved enterprise documents
-- Download available documents
-- Ask questions through the AI Assistant
-- Receive AI-generated answers based on company documents
-- View the documents used as sources for AI responses
-- Analyze enterprise documents using AI
+- Super Admin
+- Admin
+- Employee
 
-Administrators can:
+Users can access information according to their role and department permissions.
 
-- Manage organization users
-- Manage user roles
-- Assign users to departments
-- Promote employees to administrators
-- Demote administrators to employees
-- Delete users according to permission rules
-- Upload and manage enterprise documents
-- View system statistics
-- Monitor system activity
+The system combines:
 
-The system implements role-based and department-based access control to ensure that users only access information permitted for their role and department.
+- Role-Based Access Control (RBAC)
+- Department-Based Access Control
+- Document Management
+- Vector Similarity Search
+- Retrieval-Augmented Generation (RAG)
+- AI Document Analysis
+- Chat Sessions
+- Audit Logging
 
 ---
 
@@ -40,7 +35,7 @@ The system implements role-based and department-based access control to ensure t
 
 ### 1. Authentication & Authorization
 
-The system provides secure authentication with role-based access control.
+Secure authentication with role-based access control.
 
 Supported roles:
 
@@ -48,13 +43,13 @@ Supported roles:
 - Admin
 - Employee
 
-Access to administrative functionality is restricted according to the user's role.
+Administrative functionality is restricted according to user permissions.
 
 ---
 
 ### 2. Department-Based Access Control
 
-Documents can be associated with specific departments.
+Documents can be associated with specific departments or marked as company-wide.
 
 Employees can access:
 
@@ -67,12 +62,12 @@ Administrators and Super Administrators have broader access according to their p
 
 ### 3. Knowledge Base
 
-The Knowledge Base provides employees with access to approved organizational knowledge.
+The Knowledge Base provides access to approved organizational documents.
 
 Users can:
 
+- Browse documents
 - Search documents
-- Browse available documents
 - View document information
 - Download documents
 
@@ -80,59 +75,75 @@ Users can:
 
 ### 4. AI Assistant
 
-The AI Assistant allows users to ask questions about organizational policies, procedures, and other enterprise information.
+The AI Assistant allows employees to ask questions about organizational policies, procedures, and other enterprise information.
 
-The system:
+The RAG pipeline works as follows:
 
-1. Receives the user's question
-2. Generates an embedding for the question
-3. Searches the vector database for relevant document chunks
-4. Retrieves the most relevant information
-5. Sends the retrieved information to the AI model
-6. Generates an answer based on the retrieved documents
-7. Displays the source documents used for the response
+1. User submits a question
+2. The question is converted into an embedding
+3. Relevant document chunks are searched using vector similarity
+4. The most relevant chunks are retrieved
+5. Retrieved information is provided to the AI model
+6. The AI model generates a response
+7. Source documents are returned with the response
 
-This implements a Retrieval-Augmented Generation (RAG) workflow.
-
----
-
-### 5. Source References
-
-AI responses include references to the documents used during retrieval.
-
-This allows users to identify the enterprise documents that contributed to the generated answer.
+This ensures that responses are grounded in the organization's uploaded knowledge base.
 
 ---
 
-### 6. AI Document Analysis
+### 5. Document Processing & Embeddings
 
-Users can select an enterprise document and request an AI-generated analysis.
+When a document is uploaded:
 
-The analysis provides:
+1. The document is stored
+2. Text is extracted
+3. The extracted text is divided into smaller chunks
+4. Embeddings are generated for the chunks
+5. The embeddings and metadata are stored in the vector database
+6. The chunks become available for semantic retrieval
+
+Document metadata includes information such as:
+
+- Document ID
+- Document title
+- Department
+- Document category
+
+---
+
+### 6. Source References
+
+AI responses include the documents used during retrieval.
+
+Users can therefore identify which enterprise documents contributed to an AI-generated answer.
+
+---
+
+### 7. AI Document Analysis
+
+Users can select an enterprise document and request AI-generated analysis.
+
+The analysis can provide:
 
 - Document summary
 - Key points
 - Important topics
 
-The analysis is generated using the content of the selected enterprise document.
+---
+
+### 8. Document Management
+
+Administrators can:
+
+- Upload documents
+- View documents
+- Manage documents
+- Delete documents
+- Associate documents with departments
 
 ---
 
-### 7. Document Management
-
-Administrators can manage enterprise documents.
-
-Document management includes:
-
-- Uploading documents
-- Viewing documents
-- Managing documents
-- Deleting documents
-- Associating documents with departments
-
----
-
-### 8. User Management
+### 9. User Management
 
 Administrators can manage organization users.
 
@@ -145,15 +156,15 @@ Features include:
 - Demote Admins to Employees
 - Delete users
 
-New users are automatically created with the Employee role.
+New users are created with the Employee role.
 
-Only the Super Admin can promote employees to Admin.
+Administrative actions are restricted according to role permissions.
 
 ---
 
-### 9. Chat Sessions
+### 10. Chat Sessions
 
-The AI Assistant maintains chat sessions and stores conversation messages.
+The AI Assistant maintains individual chat sessions.
 
 The system stores:
 
@@ -162,28 +173,31 @@ The system stores:
 - AI responses
 - Session timestamps
 
-This allows conversations to be maintained within the application.
+This allows users to continue conversations within the application.
 
 ---
 
-### 10. Audit Logging
+### 11. Audit Logging
 
-Important administrative operations are recorded through audit logs.
+Important administrative operations are recorded using audit logs.
 
 Examples include:
 
 - User creation
+- User deletion
 - User promotion
 - User demotion
-- User deletion
+- Document upload
+- Document download
+- Setting updates
 
-This provides a record of important administrative activities.
+Audit logs provide administrators with a record of important system activities.
 
 ---
 
-### 11. Admin Dashboard
+### 12. Admin Dashboard
 
-The administration dashboard provides an overview of the system.
+The Admin Dashboard provides an overview of the system.
 
 It includes statistics related to:
 
@@ -192,7 +206,32 @@ It includes statistics related to:
 - Chat sessions
 - Chat messages
 
-Administrators can also access management sections from the dashboard.
+Administrators can also access:
+
+- User Management
+- Document Management
+- Settings
+- Audit Logs
+
+---
+
+## Role & Permission Model
+
+| Feature | Employee | Admin | Super Admin |
+|---|---|---|---|
+| AI Assistant | Yes | Yes | Yes |
+| Knowledge Base | Yes | Yes | Yes |
+| Department Documents | Own Department | All | All |
+| Company-wide Documents | Yes | Yes | Yes |
+| Document Upload | No | Yes | Yes |
+| Document Delete | No | Yes | Yes |
+| User Management | No | Yes* | Yes |
+| Promote Employee to Admin | No | No | Yes |
+| Demote Admin | No | No | Yes |
+| Audit Logs | No | Yes | Yes |
+| System Settings | No | Yes | Yes |
+
+\* Subject to the application's administrative permission rules.
 
 ---
 
@@ -202,20 +241,21 @@ The application follows a frontend-backend architecture.
 
 ```text
                     ┌───────────────────────┐
-                    │       User            │
+                    │         Users         │
+                    │                       │
                     │ Employee / Admin /    │
                     │     Super Admin       │
                     └───────────┬───────────┘
                                 │
                                 ▼
                     ┌───────────────────────┐
-                    │      Next.js          │
-                    │      Frontend         │
+                    │       Next.js         │
+                    │       Frontend        │
                     │                       │
                     │ React + Tailwind CSS  │
                     └───────────┬───────────┘
                                 │
-                         REST API Requests
+                           REST APIs
                                 │
                                 ▼
                     ┌───────────────────────┐
@@ -227,23 +267,25 @@ The application follows a frontend-backend architecture.
                     │ Document Management   │
                     │ Chat                  │
                     │ AI Analysis           │
+                    │ Audit Logging         │
                     └───────┬───────┬───────┘
                             │       │
-              ┌─────────────┘       └─────────────┐
-              ▼                                   ▼
-    ┌───────────────────┐              ┌────────────────────┐
-    │    PostgreSQL     │              │   Vector Database  │
-    │                   │              │                    │
-    │ Users             │              │ Document Embeddings│
-    │ Documents         │              │ Document Chunks    │
-    │ Chat Sessions     │              │ Similarity Search  │
-    │ Chat Messages     │              └─────────┬──────────┘
-    │ Audit Logs        │                        │
-    └───────────────────┘                        │
+                 ┌──────────┘       └───────────┐
+                 ▼                              ▼
+       ┌───────────────────┐          ┌────────────────────┐
+       │    PostgreSQL     │          │     ChromaDB       │
+       │                   │          │                    │
+       │ Users             │          │ Document Chunks    │
+       │ Documents         │          │ Embeddings         │
+       │ Chat Sessions     │          │ Metadata           │
+       │ Chat Messages     │          │ Similarity Search  │
+       │ Audit Logs        │          └─────────┬──────────┘
+       └───────────────────┘                    │
                                                 ▼
                                      ┌────────────────────┐
-                                     │      AI Model      │
+                                     │    Gemini AI       │
                                      │                    │
+                                     │ Embeddings         │
                                      │ Answer Generation  │
                                      │ Document Analysis  │
                                      └────────────────────┘
